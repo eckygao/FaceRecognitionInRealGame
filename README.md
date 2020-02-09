@@ -180,7 +180,7 @@ Exec=python /home/pi/faceid/main.py
 
 - CSI接口
 
-![](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/crmera_rpi.jpg)
+![](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/camera_rpi.jpg)
 
 **超声波传感器**
 
