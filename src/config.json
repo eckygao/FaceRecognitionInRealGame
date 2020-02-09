@@ -1,0 +1,13 @@
+{ 
+"sid":"AKID*******",
+"skey":"HN*******",
+"logo":
+{
+"checking":"/home/pi/faceid/logo_ch.png",
+"failed":"/home/pi/faceid/logo_fa.png",
+"success":"/home/pi/faceid/logo_su.png",
+"error":"/home/pi/faceid/logo_er.png"
+},
+"pic2check":"/dev/shm/v.jpg",
+"su2halt":0 
+}
