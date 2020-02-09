@@ -3,6 +3,7 @@
 
 ## 1.案例概述
 ### 背景
+
 数月前，朋友的真人实景游戏中，出现了一个人脸识别相关的需求，刚好赶上10.1假期，就帮他策划并搭建了此应用。10.1假期后运行至今，反馈稳定良好，刚好今年春节宅家，将需求分析、设计选型、搭建实现的情况分享一下。
 
 本案例是基于人脸识别进行开锁，需求简单，但由于约束比较多，架构与选型上花了不少精力。
@@ -35,6 +36,7 @@
 - 弱网络环境：由于房间隔断多，网络共用，所以网速有限，有突发延迟情况。
 
 ### 2.3 功能设计
+
 可能的架构方案有多种（方案间的比较，在文末进行），但在上述约束下，确定了一个方案，下面说一下具体形态与组成。
 
 #### 2.3.1 玩家体验过程
@@ -47,13 +49,20 @@
 #### 2.3.2 可配置内容
 
 - 腾讯云密钥对
-修改配置文件，用于适配后续不同用户的使用可能。
+
+  修改配置文件，用于适配后续不同用户的使用可能。
+
 - 人员库ID
-修改配置文件，可指定不同人员库。
+
+  修改配置文件，可指定不同人员库。
+
 - 水印提示
-更换对应PNG图片。使用图片替换，而不是字符串配置的原因，图片模式无需字库支持，无需配置显示大小，兼容图片特效。由于所见即所得，对维护人员要求低。
+
+  更换对应PNG图片。使用图片替换，而不是字符串配置的原因，图片模式无需字库支持，无需配置显示大小，兼容图片特效。由于所见即所得，对维护人员要求低。
+
 - 关机选项
-可配置任务完成后，是否自动关机。用于游戏环境复位准备，减少复位工作量。
+
+  可配置任务完成后，是否自动关机。用于游戏环境复位准备，减少复位工作量。
 
 #### 2.3.3 维护方式
 
@@ -68,9 +77,11 @@
 ## 3.技术实现
 
 ### 3.1 系统架构
+
 ![系统架构](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/infrastructure.png)
 
 #### 3.1.1 组成说明：
+
 - 腾讯云人脸识别：支持人脸识别能力
 - 树莓派：终端主控
 - CSI摄像头：视频输入。CSI为树莓派标准接口，稳定性好。
@@ -101,32 +112,39 @@
 #### 3.2.3 硬件准备
 
 - 树莓派
-Raspberry pi 3B+ (方案实施时，4B+刚上市不久，成熟度未经考验)
 
-![Raspberry pi](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/rpi.png)
+  Raspberry pi 3B+ (方案实施时，4B+刚上市不久，成熟度未经考验)
+
+  ![Raspberry pi](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/rpi.png)
 
 - 摄像头
-CSI 500W像素摄像头，镜头长度与结构更适合安装。
 
-![摄像头](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/camera.jpg)
+  CSI 500W像素摄像头，镜头长度与结构更适合安装。
+
+  ![摄像头](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/camera.jpg)
 
 - 传感器
-4针超声波测距传感器（VCC、Trig、Echo、GND）,Trig端输出一个大于10μs的高电平，Echo端会输出一个持续高电平，持续时间就是发出超声波，至收到超声波的时间。即：测距结果(米)=时长*340米/2
 
-![测距传感器](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/ultrasonic.png)
+  4针超声波测距传感器（VCC、Trig、Echo、GND）,Trig端输出一个大于10μs的高电平，Echo端会输出一个持续高电平，持续时间就是发出超声波，至收到超声波的时间。即：测距结果(米)=时长*340米/2
+
+  ![测距传感器](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/ultrasonic.png)
 
 - 显示屏
-HDMI接口，直接对接树莓派HDMI输出。要求显示屏免驱，否则需要手工在操作系统内配置分辨率等动作，额外支出时间成本。
+
+  HDMI接口，直接对接树莓派HDMI输出。要求显示屏免驱，否则需要手工在操作系统内配置分辨率等动作，额外支出时间成本。
+  （无外观特性，不单独配图）
 
 - 继电器
-一路3.3V信号控制 继电器模块。电磁锁供电默认接继电器常闭端，对继电器给出信号后，切换常开常闭状态，则电磁锁断电开锁.
 
-![继电器](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/relay.png)
+  一路3.3V信号控制 继电器模块。电磁锁供电默认接继电器常闭端，对继电器给出信号后，切换常开常闭状态，则电磁锁断电开锁.
+
+  ![继电器](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/relay.png)
 
 - 电磁锁
-12V 60kg拉力 电磁锁。 
 
-![电磁锁](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/lock.png)
+  12V 60kg拉力 电磁锁。 
+
+  ![电磁锁](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/lock.png)
 
 #### 3.2.4 树莓派环境准备
 
@@ -202,6 +220,7 @@ Exec=python /home/pi/faceid/main.py
 ### 3.3 关键点实现说明
 
 #### 3.3.1 流程逻辑
+
 伪代码
 
 ```
@@ -282,27 +301,37 @@ def addpic(img1,img2):
 ![水印效果图](https://github.com/eckygao/FaceRecognitionInRealGame/blob/master/img/re_test.jpg)
 
 ## 4.其它
+
 ### 4.1 方案选型对比
+
 设计的核心在于人脸鉴权模块，这里直接影响成本和稳定性，最后选择了上文方案（平衡成本、维护性及可靠性）。曾经的其它几种备选人脸识别方案：
 
 #### 4.1.1 本地识别A方案：
 
 使用ESP-EYE芯片，均由芯片完成，依赖ESP-IDF、ESP—WHO，使用C进行开发。
+
 低硬件成本（模块成本189\*2），高开发维护成本（C开发）。
+
 问题：难于更新配置与故障分析处理。适用于大量部署场景。
 
 #### 4.1.2 本地识别B方案：
 
 使用树莓派直接进行人脸识别，方案成熟，开源代码丰富。
+
 中硬件成本，低开发成本，高维护成本。
+
 问题：树莓派负载高，即使用间隔桢算法，也仅维持在20fps以下，卡顿明显。如进一步调优，受限于个人经验问题，恐难以保持长期稳定运行。
 
 #### 4.1.3 本地识别C方案：
 
 使用 BM1880边缘计算开发板 或其它图像处理板，社区口碑不错，有框架支持。
+
 问题：高硬件成本（模块成本1000\*2），高开发维护成本(C开发)。如果使用算力棒，需要X86_64做基础平台，成本降低有限，复杂度不变。适用于扩展能力场景。
 
 #### 4.1.4 云端识别A方案：
 
-使用腾讯云的[视频智能分析](https://aivideo.cloud.tencent.com/list.html)产品，简化终端架构，使用树莓派zero推流上云（后续放出实现方案），即可获取识别结果。部署成本低（终端视频相关模块150元），运营成本低（当前0.28元/分钟，按该场景下单次运营20分钟计算，单次游戏成本4.6元）
+使用腾讯云的[视频智能分析](https://aivideo.cloud.tencent.com/list.html)产品，简化终端架构，使用树莓派zero推流上云（后续放出实现方案），即可获取识别结果。
+
+部署成本低（终端视频相关模块150元），运营成本低（当前0.28元/分钟，按该场景下单次运营20分钟计算，单次游戏成本4.6元）
+
 问题：对网络稳定性依赖大，断流等情况影响体验。更适于网络条件较好的应用场景。
