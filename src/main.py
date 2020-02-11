@@ -129,7 +129,7 @@ def checking(picpath, sid, skey):
 
 # error put
 def show_error( info):
-    img = cv2.imread( '/home/pi/walletye/initerror.png')
+    img = cv2.imread( '/home/pi/faceid/initerror.png')
     font = cv2.FONT_HERSHEY_DUPLEX
     imgzi = cv2.putText(img, info, (10, 100), font, 1, (255, 0, 0), 2,)
 
