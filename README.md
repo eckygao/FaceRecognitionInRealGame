@@ -137,7 +137,7 @@
 
 - 配置网络
 
-进入命令行，执行 "raspi-config"，选择"Network Options"，配置WiFi接入点。为了固定IP，编辑 /etc/dhcpcd.conf 文件，添加配置信息。
+  进入命令行，执行 "raspi-config"，选择"Network Options"，配置WiFi接入点。为了固定IP，编辑 /etc/dhcpcd.conf 文件，添加配置信息。
 
 ```
 # 具体内容请参考你的本地网络规划
@@ -147,9 +147,18 @@ static routers=192.168.0.1
 static domain_name_servers=192.168.0.1 192.168.0.2
 ```
 
-- 安装依赖库
+- 安装腾讯云SDK
 
-系统默认安装python2.7，但没有opencv库，需要安装。（下载包体积较大，默认源为国外站，比较慢。树莓派改国内源方法，请自行百度，并挑选离自己近的源站）
+  参考[指引文档](https://cloud.tencent.com/document/sdk/Python)，安装调用腾讯云API的依赖库。
+  
+```
+sudo apt-get install python-pip -y
+pip install tencentcloud-sdk-python
+```
+
+- 安装图像处理库
+
+  系统默认安装python2.7，但没有[opencv](https://www.baidu.com/link?url=4w0Mem37miGtIspsMTe9cVowf-kt-dsDkDZvsWQGAkC&wd=&eqid=ad88ce7200081738000000065e42b9a2)库，需要安装。（下载包体积较大，默认源为国外站，比较慢。树莓派改国内源方法，请自行百度，并挑选离自己近的源站）
 
 ```
 sudo apt-get install libopencv-dev -y
@@ -158,13 +167,13 @@ sudo apt-get install python-opencv -y
 
 - 部署代码
 
-访问[github](https://github.com/eckygao/FaceRecognitionInRealGame)获取源码，将src文件夹内容，复制到 /home/pi/faceid 下。
+  访问[github](https://github.com/eckygao/FaceRecognitionInRealGame)获取源码，将src文件夹内容，复制到 /home/pi/faceid 下。
 
-更改 /home/pi/faceid/config.json 中的配置信息，必须改为你的 云API密钥(sid/skey)、人员库ID(facegroupid)，其它配置按需调整。
+  更改 /home/pi/faceid/config.json 中的配置信息，必须改为你的 云API密钥(sid/skey)、人员库ID(facegroupid)，其它配置按需调整。
 
 - 配置自启动
 
-需要配置图形界面自启动，保证视频输出由HDMI接口输出至显示屏，编辑 /home/pi/.config/autostart/faceid.desktop 写入如下内容
+  需要配置图形界面自启动，保证视频输出由HDMI接口输出至显示屏，编辑 /home/pi/.config/autostart/faceid.desktop 写入如下内容
 
 ```
 Type=Application
